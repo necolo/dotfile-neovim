@@ -26,4 +26,12 @@ vim.cmd([[
   augroup end
 
   set number
+  set tabstop=2               " number of columns occupied by a tab 
+  set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
+  set expandtab               " converts tabs to white space
+  set shiftwidth=2            " width for autoindents
+  set cursorline              " highlight current cursorline
+  set ignorecase              " case insensitive
+  set hlsearch                " highlight search
+  set autoindent              " indent a new line the same amount as the line just typed
 ]])
