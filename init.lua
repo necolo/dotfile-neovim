@@ -99,7 +99,7 @@ lspconfig.tsserver.setup({
 				includeInlayParameterNameHints = "literal",
 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
 				includeInlayFunctionParameterTypeHints = true,
-				includeInlayVariableTypeHints = false,
+				includeInlayVariableTypeHints = true,
 				includeInlayPropertyDeclarationTypeHints = true,
 				includeInlayFunctionLikeReturnTypeHints = true,
 				includeInlayEnumMemberValueHints = true,
@@ -119,6 +119,8 @@ lspconfig.tsserver.setup({
 	},
 })
 lspconfig.eslint.setup({})
+lspconfig.thriftls.setup({})
+lspconfig.cssls.setup({})
 
 -- lualine
 require('lualine').setup({
@@ -189,6 +191,12 @@ vim.keymap.set("n", "<leader>n", function()
   require("monorepo").toggle_project()
 end)
 
+require('telescope').setup({
+  defaults = {
+    --file_ignore_patterns = { 'node_modules', 'dist', 'output-i18n' }
+  }
+})
+
 
 -- treesitter
 require('nvim-treesitter.configs').setup {
@@ -207,7 +215,9 @@ require('nvim-treesitter.configs').setup {
     "yaml",
     "css",
     "html",
-    "lua"
+    "lua",
+    "markdown",
+    "thrift"
   },
   sync_install = false,
   auto_install = true,
@@ -258,3 +268,4 @@ vim.cmd([[
 
 vim.keymap.set('n', '<leader>wd', '<C-W>v', {})
 vim.keymap.set('n', '<leader>ww', '<C-W>w', {})
+vim.opt.clipboard = "unnamedplus"
