@@ -1,8 +1,11 @@
 require('plugins')
 
 vim.g.mapleader = ';'
+local keymap = vim.keymap.set;
 
--- theme
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                          theme                           │
+--         ╰──────────────────────────────────────────────────────────╯
 require("one_monokai").setup({
     transparent = true,
     colors = {},
@@ -12,7 +15,9 @@ require("one_monokai").setup({
     italics = true,
 })
 
--- nvim-tree
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                        nvim-tree                         │
+--         ╰──────────────────────────────────────────────────────────╯
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true -- set termguicolors to enable highlight groups
@@ -31,9 +36,9 @@ require("nvim-tree").setup({
   },
 })
 
-vim.keymap.set('n', '<leader>b', ':NvimTreeToggle<Return>', {})
-
--- auto-completions
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                     auto-completions                     │
+--         ╰──────────────────────────────────────────────────────────╯
 local cmp = require('cmp')
 cmp.setup({
   snippet = {
@@ -64,19 +69,22 @@ vim.cmd([[
   highlight! default link CmpItemKind CmpItemMenuDefault
 ]])
 
--- autopair and autotag
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                   autopair and autotag                   │
+--         ╰──────────────────────────────────────────────────────────╯
 require('nvim-autopairs').setup({
   disable_filetype = { "TelescopePrompt" , "vim" },
 })
 require('nvim-ts-autotag').setup({})
 
--- bufferline 
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                        bufferline                        │
+--         ╰──────────────────────────────────────────────────────────╯
 require('bufferline').setup({})
-vim.keymap.set('n', '<leader>j', ':BufferLineCycleNext<Return>', {})
-vim.keymap.set('n', '<leader>k', ':BufferLineCyclePrev<Return>', {})
-vim.keymap.set('n', '<leader>w', ':bdelete<Return>', {})
 
--- git
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                           git                            │
+--         ╰──────────────────────────────────────────────────────────╯
 require('git').setup({
   keymaps = {
     -- Open blame window
@@ -86,7 +94,9 @@ require('git').setup({
   }
 })
 
--- lsp
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                           lsp                            │
+--         ╰──────────────────────────────────────────────────────────╯
 local lspconfig = require('lspconfig');
 lspconfig.tsserver.setup({
 	--root_dir = function(...)
@@ -122,7 +132,9 @@ lspconfig.eslint.setup({})
 lspconfig.thriftls.setup({})
 lspconfig.cssls.setup({})
 
--- lualine
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                         lualine                          │
+--         ╰──────────────────────────────────────────────────────────╯
 require('lualine').setup({
   options = {
     icons_enabled = true,
@@ -178,18 +190,7 @@ end
 
 local fb_actions = require "telescope".extensions.file_browser.actions
 
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>gg', builtin.git_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
-vim.keymap.set("n", "<leader>m", function()
-  require("telescope").extensions.monorepo.monorepo()
-end)
-vim.keymap.set("n", "<leader>n", function()
-  require("monorepo").toggle_project()
-end)
 
 require('telescope').setup({
   defaults = {
@@ -198,7 +199,9 @@ require('telescope').setup({
 })
 
 
--- treesitter
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                        treesitter                        │
+--         ╰──────────────────────────────────────────────────────────╯
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
@@ -248,7 +251,38 @@ require('nvim-treesitter.configs').setup {
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
 
--- vim settings
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                       comment-box                        │
+--         ╰──────────────────────────────────────────────────────────╯
+local cb = require('comment-box');
+cb.setup({
+  doc_width = 80, -- width of the document
+  box_width = 60, -- width of the boxes
+  borders = { -- symbols used to draw a box
+    top = "─",
+    bottom = "─",
+    left = "│",
+    right = "│",
+    top_left = "╭",
+    top_right = "╮",
+    bottom_left = "╰",
+    bottom_right = "╯",
+  },
+  line_width = 70, -- width of the lines
+  line = { -- symbols used to draw a line
+    line = "─",
+    line_start = "─",
+    line_end = "─",
+  },
+  outer_blank_lines = false, -- insert a blank line above and below the box
+  inner_blank_lines = false, -- insert a blank line above and below the text
+  line_blank_line_above = false, -- insert a blank line above the line
+  line_blank_line_below = false, -- insert a blank line below the line
+})
+
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                       vim settings                       │
+--         ╰──────────────────────────────────────────────────────────╯
 vim.cmd([[
   augroup packer_user_config
     autocmd!
@@ -266,6 +300,31 @@ vim.cmd([[
   set autoindent              " indent a new line the same amount as the line just typed
 ]])
 
-vim.keymap.set('n', '<leader>wd', '<C-W>v', {})
-vim.keymap.set('n', '<leader>ww', '<C-W>w', {})
+--         ╭──────────────────────────────────────────────────────────╮
+--         │                          keymap                          │
+--         ╰──────────────────────────────────────────────────────────╯
+
+keymap('n', '<leader>wd', '<C-W>v', {})
+keymap('n', '<leader>ww', '<C-W>w', {})
 vim.opt.clipboard = "unnamedplus"
+
+-- comment-box
+keymap({ 'n', 'v' }, "<leader>x1", cb.ccbox, {})
+keymap({ 'n', 'v' }, "<leader>x2", function() cb.cbox(12) end, {})
+
+-- nvim-tree
+keymap('n', '<leader>b', ':NvimTreeToggle<Return>', {})
+
+-- telescope
+keymap('n', '<leader>ff', builtin.find_files, {})
+keymap('n', '<leader>gg', builtin.git_files, {})
+keymap('n', '<leader>fg', builtin.live_grep, {})
+keymap('n', '<leader>fb', builtin.buffers, {})
+keymap('n', '<leader>fh', builtin.help_tags, {})
+keymap("n", "<leader>m", function() require("telescope").extensions.monorepo.monorepo() end)
+keymap("n", "<leader>n", function() require("monorepo").toggle_project() end)
+
+-- buffer-line
+keymap('n', '<leader>j', ':BufferLineCycleNext<Return>', {})
+keymap('n', '<leader>k', ':BufferLineCyclePrev<Return>', {})
+keymap('n', '<leader>w', ':bdelete<Return>', {})
