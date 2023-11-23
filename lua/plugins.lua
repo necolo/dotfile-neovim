@@ -36,17 +36,32 @@ return packer.startup(function(use)
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/nvim-cmp'
 
+  use 'nvim-tree/nvim-web-devicons'
   use 'nvim-treesitter/nvim-treesitter'
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+  }
 
   use 'windwp/nvim-ts-autotag'
   use 'windwp/nvim-autopairs'
 
   use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.4',
-	  requires = { {'nvim-lua/plenary.nvim'} }
-      }
-
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',
+    requires = { {'nvim-lua/plenary.nvim'} }
+  }
   use 'nvim-telescope/telescope-file-browser.nvim'
+  use {
+      "imNel/monorepo.nvim",
+      config = function()
+        require("monorepo").setup({
+          silent = false, -- Supresses vim.notify messages
+          autoload_telescope = true, -- Automatically loads the telescope extension at setup
+          data_path = vim.fn.stdpath("data"), -- Path that monorepo.json gets saved to
+        })
+      end,
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+  }
 
   use { 'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons' }
 
@@ -54,6 +69,8 @@ return packer.startup(function(use)
   use 'dinhhuy258/git.nvim'
 
   use 'cpea2506/one_monokai.nvim'
+
+  use 'rcarriga/nvim-notify'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
